@@ -1,0 +1,11 @@
+{
+  "name": "sagalab",
+  "private": true,
+  "workspaces": [
+    "api",
+    "web"
+  ],
+  "engines": {
+    "node": ">=22"
+  }
+}
