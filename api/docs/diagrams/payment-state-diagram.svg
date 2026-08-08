@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4f46e5"/>
+    </marker>
+    <marker id="arrow-gray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#6b7280"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#059669"/>
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#dc2626"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1000" height="560" fill="#ffffff"/>
+
+  <text x="500" y="32" text-anchor="middle" font-size="18" font-weight="700" fill="#111827">
+    Máquina de estados — Payment (Fase 1, sagalab)
+  </text>
+
+  <!-- ===== Boxes ===== -->
+  <!-- pending -->
+  <rect x="30" y="105" width="160" height="70" rx="10" fill="#eef2ff" stroke="#4f46e5" stroke-width="1.5"/>
+  <text x="110" y="132" text-anchor="middle" font-size="14" font-weight="700" fill="#1e1b4b">pending</text>
+  <text x="110" y="150" text-anchor="middle" font-size="11" fill="#4338ca">recién creado</text>
+
+  <!-- authorized -->
+  <rect x="280" y="105" width="160" height="70" rx="10" fill="#eef2ff" stroke="#4f46e5" stroke-width="1.5"/>
+  <text x="360" y="132" text-anchor="middle" font-size="14" font-weight="700" fill="#1e1b4b">authorized</text>
+  <text x="360" y="150" text-anchor="middle" font-size="11" fill="#4338ca">plata apartada</text>
+
+  <!-- captured -->
+  <rect x="530" y="105" width="160" height="70" rx="10" fill="#eef2ff" stroke="#4f46e5" stroke-width="1.5"/>
+  <text x="610" y="132" text-anchor="middle" font-size="14" font-weight="700" fill="#1e1b4b">captured</text>
+  <text x="610" y="150" text-anchor="middle" font-size="11" fill="#4338ca">ya se cobró</text>
+
+  <!-- refunded -->
+  <rect x="800" y="105" width="160" height="70" rx="10" fill="#ecfdf5" stroke="#059669" stroke-width="1.5"/>
+  <text x="880" y="132" text-anchor="middle" font-size="14" font-weight="700" fill="#064e3b">refunded</text>
+  <text x="880" y="150" text-anchor="middle" font-size="11" fill="#047857">devuelto 100%</text>
+
+  <!-- declined -->
+  <rect x="30" y="315" width="160" height="70" rx="10" fill="#f3f4f6" stroke="#6b7280" stroke-width="1.5"/>
+  <text x="110" y="342" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2937">declined</text>
+  <text x="110" y="360" text-anchor="middle" font-size="11" fill="#4b5563">rechazado (terminal)</text>
+
+  <!-- expired -->
+  <rect x="280" y="315" width="160" height="70" rx="10" fill="#f3f4f6" stroke="#6b7280" stroke-width="1.5"/>
+  <text x="360" y="342" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2937">expired</text>
+  <text x="360" y="360" text-anchor="middle" font-size="11" fill="#4b5563">caducó (terminal)</text>
+
+  <!-- partially_refunded -->
+  <rect x="530" y="315" width="160" height="70" rx="10" fill="#ecfdf5" stroke="#059669" stroke-width="1.5"/>
+  <text x="610" y="342" text-anchor="middle" font-size="13" font-weight="700" fill="#064e3b">partially_refunded</text>
+  <text x="610" y="360" text-anchor="middle" font-size="11" fill="#047857">devuelto una parte</text>
+
+  <!-- charged_back -->
+  <rect x="800" y="315" width="160" height="70" rx="10" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="880" y="342" text-anchor="middle" font-size="14" font-weight="700" fill="#7f1d1d">charged_back</text>
+  <text x="880" y="360" text-anchor="middle" font-size="11" fill="#b91c1c">contracargo</text>
+
+  <!-- ===== Edges ===== -->
+  <!-- pending -> authorized -->
+  <line x1="190" y1="140" x2="278" y2="140" stroke="#4f46e5" stroke-width="2" marker-end="url(#arrow-blue)"/>
+  <text x="234" y="132" text-anchor="middle" font-size="11" fill="#4f46e5">authorize()</text>
+
+  <!-- pending -> declined -->
+  <line x1="110" y1="175" x2="110" y2="313" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow-gray)"/>
+  <text x="118" y="248" font-size="11" fill="#6b7280">decline()</text>
+
+  <!-- authorized -> captured -->
+  <line x1="440" y1="140" x2="528" y2="140" stroke="#4f46e5" stroke-width="2" marker-end="url(#arrow-blue)"/>
+  <text x="484" y="132" text-anchor="middle" font-size="11" fill="#4f46e5">capture()</text>
+
+  <!-- authorized -> expired -->
+  <line x1="360" y1="175" x2="360" y2="313" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow-gray)"/>
+  <text x="368" y="248" font-size="11" fill="#6b7280">expire()</text>
+
+  <!-- captured -> refunded -->
+  <line x1="690" y1="140" x2="798" y2="140" stroke="#059669" stroke-width="2" marker-end="url(#arrow-green)"/>
+  <text x="744" y="123" text-anchor="middle" font-size="11" fill="#059669">refund() 100%</text>
+
+  <!-- captured -> partially_refunded -->
+  <line x1="610" y1="175" x2="610" y2="313" stroke="#059669" stroke-width="2" marker-end="url(#arrow-green)"/>
+  <text x="618" y="248" font-size="11" fill="#059669">refund() parcial</text>
+
+  <!-- partially_refunded -> refunded -->
+  <path d="M 690 350 C 800 350, 850 260, 880 177" fill="none" stroke="#059669" stroke-width="2" marker-end="url(#arrow-green)"/>
+  <text x="800" y="290" font-size="11" fill="#059669">refund() resto</text>
+
+  <!-- captured -> charged_back -->
+  <path d="M 660 177 C 700 250, 780 295, 798 312" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrow-red)"/>
+  <text x="700 " y="230" font-size="11" fill="#dc2626">chargeback()</text>
+
+  <!-- refunded -> charged_back -->
+  <line x1="880" y1="175" x2="880" y2="313" stroke="#dc2626" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrow-red)"/>
+  <text x="888" y="248" font-size="11" fill="#dc2626">chargeback()</text>
+
+  <!-- ===== Legend ===== -->
+  <rect x="30" y="420" width="940" height="120" rx="8" fill="#fafafa" stroke="#e5e7eb"/>
+  <text x="50" y="443" font-size="12" font-weight="700" fill="#111827">Leyenda</text>
+
+  <line x1="50" y1="458" x2="80" y2="458" stroke="#4f46e5" stroke-width="2" marker-end="url(#arrow-blue)"/>
+  <text x="88" y="462" font-size="11" fill="#374151">progreso normal (authorize, capture)</text>
+
+  <line x1="50" y1="476" x2="80" y2="476" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow-gray)"/>
+  <text x="88" y="480" font-size="11" fill="#374151">salida temprana, terminal (decline, expire)</text>
+
+  <line x1="50" y1="494" x2="80" y2="494" stroke="#059669" stroke-width="2" marker-end="url(#arrow-green)"/>
+  <text x="88" y="498" font-size="11" fill="#374151">reembolso (refund)</text>
+
+  <line x1="380" y1="458" x2="410" y2="458" stroke="#dc2626" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrow-red)"/>
+  <text x="418" y="462" font-size="11" fill="#374151">chargeback — por eso captured/refunded no son terminales</text>
+
+  <text x="380" y="480" font-size="11" fill="#b91c1c">⚠ cualquier transición: eventAt viejo → StaleWebhookEventError (rechazado, no bufferizado)</text>
+  <text x="380" y="498" font-size="11" fill="#b91c1c">⚠ refund(): monto acumulado &gt; amountCents → InvalidRefundAmountError</text>
+</svg>
