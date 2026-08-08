@@ -1,9 +1,8 @@
-import {test} from 'node:test';
+import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import supertest from 'supertest';
-import {buildApp} from '../../src/app.ts';
-import type {Env} from '../../src/config/env.ts';
-
+import { buildApp } from '../../src/app.ts';
+import type { Env } from '../../src/config/env.ts';
 
 test('GET /health should return 200 OK', async () => {
   const env = {

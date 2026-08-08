@@ -10,6 +10,8 @@
     "test": "node --experimental-strip-types --test tests/**/*.test.ts",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit -p tsconfig.eslint.json",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "migrate": "node --env-file=.env --experimental-strip-types src/migrate.ts"
   },
   "dependencies": {
