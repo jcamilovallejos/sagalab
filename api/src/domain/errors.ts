@@ -5,10 +5,10 @@ export abstract class DomainError extends Error {
   }
 }
 
-// Política del dominio ante webhooks fuera de orden: rechazar, nunca bufferizar.
-// Un evento con timestamp anterior al último aplicado se descarta explícitamente
-// en vez de encolarse — bufferizar requeriría estado adicional (cola, reintentos)
-// que esta capa pura no tiene forma de sostener.
+// Domain policy for out-of-order webhooks: reject, never buffer. An event
+// with a timestamp older than the last applied one is explicitly discarded
+// instead of queued — buffering would need extra state (a queue, retries)
+// that this pure layer has no way to sustain.
 export class StaleWebhookEventError extends DomainError {
   readonly paymentId: string;
   readonly lastEventAt: Date;

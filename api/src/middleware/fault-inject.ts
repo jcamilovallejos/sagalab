@@ -1,7 +1,11 @@
 import type { NextFunction, Request, RequestHandler, Response } from 'express';
 import { z } from 'zod';
 
-import { FAULT_STEPS, type FaultInjectionConfig, type FaultMode } from '../types/fault-injection.ts';
+import {
+  FAULT_STEPS,
+  type FaultInjectionConfig,
+  type FaultMode,
+} from '../types/fault-injection.ts';
 
 const StepSchema = z.enum(FAULT_STEPS);
 
@@ -79,8 +83,8 @@ export function parseFaultInjectionHeader(header: string): FaultInjectionConfig 
 
 declare module 'express-serve-static-core' {
   interface Request {
-    // Siempre presente en cualquier ruta montada después de este middleware
-    // (aunque sea {} cuando no viene el header) — nunca undefined.
+    // Always present on any route mounted after this middleware (even as {}
+    // when the header is absent) — never undefined.
     faultInjection: FaultInjectionConfig;
   }
 }

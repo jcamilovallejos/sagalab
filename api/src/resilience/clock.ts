@@ -20,8 +20,8 @@ interface PendingSleep {
   readonly resolve: () => void;
 }
 
-// Reloj controlable a mano para tests: sleep() no espera tiempo real, queda
-// pendiente hasta que advance() lo cumpla explícitamente.
+// Manually controllable clock for tests: sleep() doesn't wait real time, it
+// stays pending until advance() fulfills it explicitly.
 export class FakeClock implements Clock {
   private currentMs: number;
   private pending: PendingSleep[] = [];

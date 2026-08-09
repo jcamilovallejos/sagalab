@@ -3,9 +3,9 @@ import { InvalidRefundAmountError, StaleWebhookEventError } from './errors.ts';
 interface PaymentBase {
   readonly id: string;
   readonly amountCents: number;
-  // Timestamp del último evento del proveedor aplicado a este pago. Toda
-  // transición lo compara contra el timestamp del evento entrante para
-  // decidir si el evento está fuera de orden.
+  // Timestamp of the last provider event applied to this payment. Every
+  // transition compares it against the incoming event's timestamp to
+  // decide whether the event is out of order.
   readonly lastEventAt: Date;
 }
 
@@ -39,7 +39,7 @@ export interface PartiallyRefundedPayment extends PaymentBase {
   readonly refundedCents: number;
 }
 
-// captured y refunded no son terminales: un chargeback puede llegar después.
+// captured and refunded are not terminal: a chargeback can still arrive later.
 export interface ChargedBackPayment extends PaymentBase {
   readonly status: 'charged_back';
 }

@@ -8,9 +8,9 @@ import {
 import type { ChargeRequest, ChargeResult, PaymentProvider } from './index.ts';
 import type { Clock } from '../resilience/clock.ts';
 
-// Stub principal: simula un banco/pasarela de pago en memoria, sin red real.
-// El modo de fallo llega por request en ChargeRequest.fault (lo parsea
-// middleware/fault-inject.ts a partir del header X-Fault-Inject).
+// Main stub: simulates a bank/payment gateway in memory, no real network.
+// The fault mode arrives per request in ChargeRequest.fault (parsed by
+// middleware/fault-inject.ts from the X-Fault-Inject header).
 export class StubPaymentProvider implements PaymentProvider {
   private readonly clock: Clock;
   private readonly flakyAttempts = new Map<string, number>();
@@ -45,16 +45,16 @@ export class StubPaymentProvider implements PaymentProvider {
         return this.chargeFlaky(request, fault.n);
 
       case 'charged_but_timeout':
-        // El cobro sí ocurre (queda registrado), pero la respuesta nunca
-        // llega — es el caso perverso: el llamador no tiene forma de saber,
-        // por esta promesa, que el dinero ya se movió.
+        // The charge does happen (it gets recorded), but the response never
+        // arrives — this is the perverse case: the caller has no way to
+        // know, from this promise, that the money already moved.
         this.chargedDespiteTimeout.add(request.idempotencyKey);
         return new Promise<never>(() => {});
     }
   }
 
-  // Introspección de prueba, no forma parte de la interfaz PaymentProvider:
-  // ninguna otra implementación (altstub, fase 10) tiene por qué exponerla.
+  // Test introspection, not part of the PaymentProvider interface: no other
+  // implementation (altstub, phase 10) needs to expose this.
   wasChargedDespiteTimeout(idempotencyKey: string): boolean {
     return this.chargedDespiteTimeout.has(idempotencyKey);
   }

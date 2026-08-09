@@ -5,23 +5,23 @@ export abstract class PaymentProviderError extends Error {
   }
 }
 
-// Rechazo de negocio: el banco dijo que no. Nunca reintentable (fase 4).
+// Business rejection: the bank said no. Never retryable (phase 4).
 export class PaymentProviderDeclinedError extends PaymentProviderError {
   constructor(paymentId: string) {
     super(`Pago ${paymentId} rechazado por el proveedor`);
   }
 }
 
-// Fallo transitorio del proveedor (error500 o flaky en sus intentos fallidos).
-// Reintentable (fase 4).
+// Transient provider failure (error500, or flaky on its failing attempts).
+// Retryable (phase 4).
 export class PaymentProviderServerError extends PaymentProviderError {
   constructor(paymentId: string) {
     super(`Error del proveedor al procesar el pago ${paymentId}`);
   }
 }
 
-// El proveedor no respondió a tiempo. Reintentable (fase 4) — pero ver
-// charged_but_timeout: que expire no implica que el cobro no haya ocurrido.
+// The provider didn't respond in time. Retryable (phase 4) — but see
+// charged_but_timeout: expiring doesn't mean the charge didn't happen.
 export class PaymentProviderTimeoutError extends PaymentProviderError {
   constructor(paymentId: string) {
     super(`El proveedor no respondió a tiempo para el pago ${paymentId}`);

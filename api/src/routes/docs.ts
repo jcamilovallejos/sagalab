@@ -2,7 +2,7 @@ import { OpenAPIRegistry, OpenApiGeneratorV3 } from '@asteasolutions/zod-to-open
 import { Router } from 'express';
 import swaggerUi from 'swagger-ui-express';
 
-// El registry se va llenando fase a fase con los schemas de zod de cada endpoint.
+// The registry fills up phase by phase with each endpoint's zod schemas.
 export const openApiRegistry = new OpenAPIRegistry();
 
 function buildOpenApiDocument() {
